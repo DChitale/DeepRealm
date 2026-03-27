@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Draggable } from 'gsap/draggable';
+import { Draggable } from 'gsap/Draggable';
 import ParticleEffect from '../components/ParticleEffect';
 import { ZONE_FACTS } from '../data/fact';
 
@@ -185,16 +185,14 @@ const SunLightZone = () => {
       ref={containerRef}
       className="min-h-[160vh] w-full relative flex items-center py-32 overflow-hidden -mt-px select-none"
     >
-      {/* Background System */}
       <div className="absolute inset-0 w-full h-full bg-[#0a274c] z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#063a6e]/40 to-[#0e1317]"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#063a6e]/40 to-[#0e1317]" />
       </div>
-      
+
       <ParticleEffect rgb="200, 230, 255" count={250} speed={1.2} />
 
-      {/* Extreme Blend Overlays */}
       <div className="absolute top-0 w-full h-[50vh] bg-linear-to-b from-[#0a274c] via-transparent to-transparent z-10 pointer-events-none" />
-      <div className="absolute bottom-0 w-full h-96 bg-linear-to-t from-[#0e1317] to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-96 bg-linear-to-t from-[#0E1317] to-transparent z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -262,4 +260,4 @@ const SunLightZone = () => {
   );
 };
 
-export default SunLightZone;  
+export default SunLightZone;

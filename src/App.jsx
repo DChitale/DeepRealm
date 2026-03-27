@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from './components/Navbar'
+
 import DepthMeter from './components/DepthMeter'
 import LoadingScreen from './components/LoadingScreen'
 import ScrollTop from './components/ScrollTop'
@@ -11,7 +11,6 @@ import MidnightZone from './Sections/MidnightZone'
 import AbyssalZone from './Sections/AbyssalZone'
 import HadalZone from './Sections/HadalZone'
 
-import ParallaxCreatures from './components/ParallaxCreatures'
 import SonarScan from './components/SonarScan'
 
 const App = () => {
@@ -21,7 +20,6 @@ const App = () => {
     <div className='w-full bg-black text-white selection:bg-sky-500/30 overflow-x-hidden relative'>
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       
-      <ParallaxCreatures />
       <SonarScan />
       <DepthMeter />
       

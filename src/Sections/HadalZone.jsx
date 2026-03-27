@@ -51,12 +51,12 @@ const HadalZone = () => {
 
   return (
     <section ref={containerRef} className="min-h-[160vh] w-full relative flex flex-col items-center justify-center py-48 overflow-hidden bg-black select-none -mt-px">
-      <div className="absolute inset-0 w-full h-full bg-linear-to-b from-black via-[#020202] to-[#010002] z-0"></div>
-      <ParticleEffect rgb="200, 200, 200" count={40} speed={0.15} />
+      <div className="absolute inset-0 w-full h-full bg-linear-to-b from-black via-[#1a0000] to-[#050000] z-0"></div>
+      <ParticleEffect rgb="255, 60, 0" count={120} speed={2.2} />
 
       <div className="absolute top-0 w-full h-96 bg-linear-to-b from-black via-transparent to-transparent z-10 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 w-full z-10 text-center mb-32">
+      <div className="max-w-7xl mx-auto px-6 w-full z-30 text-center mb-32">
         <div ref={contentRef} className="max-w-3xl mx-auto">
           <span className="text-xs font-bold tracking-[0.5em] uppercase text-white/30 mb-6 block font-mono flex items-center justify-center gap-3">
             <span className="w-8 h-[1px] bg-white/20" />
@@ -74,7 +74,7 @@ const HadalZone = () => {
       </div>
 
       {/* HORIZONTAL AUTO-SCROLLING CARDS */}
-      <div className="w-full z-10 relative overflow-hidden h-[450px] flex items-center group">
+      <div className="w-full z-30 relative overflow-hidden h-[450px] flex items-center group">
          <div 
            ref={scrollRef} 
            className="flex gap-8 px-4 w-max group-hover:[animation-play-state:paused]"

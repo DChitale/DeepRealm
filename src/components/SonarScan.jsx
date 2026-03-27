@@ -30,7 +30,7 @@ const SonarScan = () => {
       // Only dims the world as you descend deeper into the Twilight/Midnight zones.
       gsap.to(sonarRef.current, {
         scrollTrigger: {
-          trigger: 'body',
+          trigger: document.body,
           start: '20% top', 
           end: '75% top',
           scrub: 1,
