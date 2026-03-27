@@ -48,8 +48,6 @@ const ZONES = [
   }
 ];
 
-const MAX_DEPTH = 11000;
-
 const DepthMeter = () => {
   const [depth, setDepth] = useState(0);
   const [currentZone, setCurrentZone] = useState(ZONES[0]);
@@ -79,71 +77,115 @@ const DepthMeter = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Initial call
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const pressure = Math.round(1 + depth / 10);
+  
+  const getTemperature = (d) => {
+    if (d < 200) return (25 - (d / 200) * 5).toFixed(1);
+    if (d < 1000) return (20 - ((d - 200) / 800) * 15).toFixed(1);
+    return (5 - ((d - 1000) / 10000) * 3).toFixed(1);
+  };
+  const temperature = getTemperature(depth);
+
   return (
     <>
-      {/* Desktop Layout (Right-aligned vertical HUD) */}
-      <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 items-center gap-4 pointer-events-none">
+      {/* Desktop Layout (Bottom-center wide HUD) */}
+      <div className="hidden md:flex fixed left-1/2 bottom-8 -translate-x-1/2 z-100 items-center pointer-events-none w-full max-w-4xl px-8">
         
-        {/* Zone Info HUD */}
-        <div className="flex flex-col items-end text-right backdrop-blur-sm bg-black/40 p-6 rounded-xl border border-white/10 shadow-lg">
-          <span className="text-xs font-semibold tracking-widest uppercase text-white/50 mb-1 font-sans">
-            Current Depth
-          </span>
-          <div className="flex items-baseline gap-1 mb-2">
-            <span className={`text-5xl font-semibold font-instrument ${currentZone.color}`}>
-              {depth.toLocaleString()}
-            </span>
-            <span className={`text-sm ${currentZone.color} opacity-80`}>m</span>
-          </div>
+        <div className="w-full bg-white/10 bg-linear-to-b from-transparent to-black/10 backdrop-blur-2xl rounded-2xl border border-white/20 p-4 md:p-6 flex flex-col gap-4 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
           
-          <h4 className={`text-xl font-medium font-instrument ${currentZone.color}`}>
-            {currentZone.name}
-          </h4>
+          <div className="flex justify-between items-end">
+             <div className="flex flex-col gap-0.5">
+                <span className={`text-[9px] font-mono uppercase tracking-[0.3em] opacity-40 mb-1 ${currentZone.color}`}>ZONE_TELEM</span>
+                <h4 className={`text-xl font-instrument font-bold uppercase tracking-widest leading-none ${currentZone.color}`}>
+                  {currentZone.name}
+                </h4>
+             </div>
 
-       
-        </div>
+             <div className="flex gap-10 items-end">
+                {/* Temperature Stats */}
+                <div className="flex flex-col items-end leading-none">
+                   <span className="text-[9px] font-mono uppercase opacity-30 mb-1.5">Temp</span>
+                   <div className="flex items-baseline gap-0.5">
+                      <span className={`text-xl md:text-2xl font-semibold font-instrument ${currentZone.color}`}>{temperature}</span>
+                      <span className={`text-[10px] font-sans font-medium uppercase ${currentZone.color}`}>°C</span>
+                   </div>
+                </div>
 
-        {/* Vertical Progress Bar */}
-        <div className="h-64 w-2 bg-black/40 rounded-full overflow-hidden border border-white/10 relative">
-          <div 
-            className={`absolute top-0 left-0 w-full rounded-full transition-all duration-300 ease-out ${currentZone.bg}`}
-            style={{ height: `${scrollProgress * 100}%` }}
-          />
-          {/* Markers for zones (every 20%) */}
-          {ZONES.map((_, idx) => (
+                {/* Pressure Stats */}
+                <div className="flex flex-col items-end leading-none">
+                   <span className="text-[9px] font-mono uppercase opacity-30 mb-1.5">Pressure</span>
+                   <div className="flex items-baseline gap-0.5">
+                      <span className={`text-xl md:text-2xl font-semibold font-instrument ${currentZone.color}`}>{pressure.toLocaleString()}</span>
+                      <span className={`text-[10px] font-sans font-medium uppercase ${currentZone.color}`}>atm</span>
+                   </div>
+                </div>
+
+                {/* Depth Stats */}
+                <div className="flex flex-col items-end leading-none">
+                   <span className="text-[9px] font-mono uppercase opacity-30 mb-1.5">Depth</span>
+                   <div className="flex items-baseline gap-1">
+                      <span className={`text-4xl md:text-5xl font-semibold font-instrument tracking-tight ${currentZone.color}`}>
+                        {depth.toLocaleString()}
+                      </span>
+                      <span className={`text-xs font-sans font-medium uppercase tracking-widest ${currentZone.color}`}>m</span>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* Horizontal Progress Bar with Segment Markers */}
+          <div className="h-1 w-full bg-black/60 rounded-full overflow-hidden relative border border-white/5">
             <div 
-              key={idx}
-              className="absolute left-0 w-full h-px bg-white/20"
-              style={{ top: `${(idx / ZONES.length) * 100}%` }}
+              className={`absolute top-0 left-0 h-full rounded-full transition-all duration-300 ease-out ${currentZone.bg}`}
+              style={{ width: `${scrollProgress * 100}%` }}
             />
-          ))}
+            {ZONES.map((_, idx) => (
+              <div 
+                key={idx}
+                className="absolute top-0 h-full w-[1.5px] bg-white/10"
+                style={{ left: `${(idx / (ZONES.length - 1)) * 100}%` }}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Mobile Layout (Bottom-anchored horizontal pill) */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm pointer-events-none">
-        <div className="backdrop-blur-sm bg-black/50 p-4 rounded-2xl border border-white/10 shadow-lg flex flex-col gap-3">
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-sm pointer-events-none">
+        <div className="backdrop-blur-xl bg-black/60 p-4 rounded-2xl border border-white/10 shadow-lg flex flex-col gap-3">
           
-          <div className="flex justify-between items-end">
-            <span className={`text-sm font-semibold tracking-widest uppercase font-sans ${currentZone.color}`}>
-              {currentZone.name}
-            </span>
-            <div className="flex items-baseline gap-1">
-              <span className={`text-3xl font-instrument font-semibold ${currentZone.color}`}>
-                {depth.toLocaleString()}
+          <div className="flex justify-between items-start">
+            <div className="flex flex-col">
+              <span className={`text-[8px] font-mono tracking-widest uppercase opacity-40 ${currentZone.color}`}>
+                {currentZone.name}
               </span>
-              <span className={`text-xs font-sans ${currentZone.color} opacity-80`}>m</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className={`text-3xl font-instrument font-medium ${currentZone.color}`}>
+                  {depth.toLocaleString()}
+                </span>
+                <span className={`text-xs font-sans ${currentZone.color} opacity-60 uppercase`}>m</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-end gap-1">
+               <div className="flex items-baseline gap-1 leading-none">
+                  <span className={`text-xs font-mono ${currentZone.color} opacity-40 uppercase`}>T:</span>
+                  <span className={`text-sm font-instrument ${currentZone.color}`}>{temperature}°C</span>
+               </div>
+               <div className="flex items-baseline gap-1 leading-none">
+                  <span className={`text-xs font-mono ${currentZone.color} opacity-40 uppercase`}>P:</span>
+                  <span className={`text-sm font-instrument ${currentZone.color}`}>{pressure} atm</span>
+               </div>
             </div>
           </div>
 
           {/* Horizontal Progress Bar */}
-          <div className="h-1.5 w-full bg-black/60 rounded-full overflow-hidden relative">
+          <div className="h-1 w-full bg-black/60 rounded-full overflow-hidden relative">
             <div 
               className={`absolute top-0 left-0 h-full rounded-full transition-all duration-300 ease-out ${currentZone.bg}`}
               style={{ width: `${scrollProgress * 100}%` }}

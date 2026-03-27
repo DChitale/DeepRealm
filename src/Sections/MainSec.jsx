@@ -15,8 +15,8 @@ const SunlightZone = () => {
         <Hero/>
       </div>
 
-      {/* Seamless blend gradient to Section 2 */}
-      <div className="absolute bottom-0 w-full h-96 bg-linear-to-t from-[#0E1317] to-transparent z-20 pointer-events-none" />
+      {/* Seamless blend gradient to Section 2 (SunlightZone) */}
+      <div className="absolute bottom-0 w-full h-[40vh] bg-linear-to-t from-[#0a274c] via-[#0a274c]/40 to-transparent z-20 pointer-events-none" />
     </div>
   )
 }
