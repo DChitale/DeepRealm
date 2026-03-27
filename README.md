@@ -2,7 +2,7 @@
 
 DeepRealm is a high-fidelity, immersive oceanic exploration web experience. Built with a focus on cinematic storytelling and fluid interactions, it takes users on a scientific descent from the shimmering surface of the Sunlight Zone to the crushing depths of the Hadal trenches.
 
-![DeepRealm Preview](https://github.com/DChitale/DeepRealm/raw/main/public/preview.png) *(Note: Placeholder for actual preview image)*
+![DeepRealm Preview](https://github.com/DChitale/DeepRealm/blob/main/public/Images/preview.png) *(Note: Placeholder for actual preview image)*
 
 ## Project Structure
 
