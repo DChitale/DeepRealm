@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Draggable } from 'gsap/draggable';
+import { Draggable } from 'gsap/Draggable';
 import ParticleEffect from '../components/ParticleEffect';
 import { ZONE_FACTS } from '../data/fact';
 
@@ -168,7 +168,7 @@ const AbyssalZone = () => {
       <div className="absolute top-0 w-full h-96 bg-linear-to-b from-[#040404] via-transparent to-transparent z-10 pointer-events-none" />
       <div className="absolute bottom-0 w-full h-96 bg-linear-to-t from-black to-transparent z-10 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full z-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         
         <div ref={contentRef} className="max-w-xl text-left">
           <span className="text-xs font-bold tracking-[0.5em] uppercase text-purple-600 mb-4 block font-mono flex items-center gap-2">
