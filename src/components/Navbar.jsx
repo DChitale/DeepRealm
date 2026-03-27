@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='absolute top-0 w-full h-16 px-5 py-8 lg:px-10  flex items-center justify-between z-50'>
+    <nav className='absolute top-5 w-full h-16 px-5 py-8 lg:px-10  flex items-center justify-between z-50'>
       <div className='text-4xl text-white italic tracking-wide font-instrument'>
         <h1>DeepRealm</h1>
       </div>
